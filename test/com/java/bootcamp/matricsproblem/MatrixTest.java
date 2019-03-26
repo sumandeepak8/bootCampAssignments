@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MatrixTest {
+
     @Test
     void shouldReturnMatrixAfterAddingWithAnotherMatrix() {
         int[][] a = {{1,2},{3,4}};
@@ -58,6 +59,23 @@ class MatrixTest {
         Matrix expected = new Matrix(d);
 
         assertArrayEquals(expected.getMatrix(), matrix.multiply(matrix1).getMatrix());
+    }
+    @Test
+    void shouldReturnMatrixAfterMultiplying3by2WithAnotherMatrix() {
+        int[][] a = {{1,0},{0,1},{1,2}};
+        Matrix matrix = new Matrix(a);
+
+        int[][] c = {{2,1,1},{2,4,1}};
+        Matrix matrix1 = new Matrix(c);
+
+        int[][] d = {{2,1,1},{2,4,1},{6,9,3}};
+        Matrix expected = new Matrix(d);
+
+        assertArrayEquals(expected.getMatrix(), matrix.multiply(matrix1).getMatrix());
+
+        int[][] e = {{3,3},{3,6}};
+        Matrix expected1 = new Matrix(e);
+        assertArrayEquals(expected1.getMatrix(), matrix1.multiply(matrix).getMatrix());
     }
 
 

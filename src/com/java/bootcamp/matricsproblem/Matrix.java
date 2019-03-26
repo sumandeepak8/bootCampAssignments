@@ -18,15 +18,16 @@ class Matrix {
     }
 
     Matrix multiply(Matrix secondMatrix) {
-        int[][] result = new int [this.matrix.length][this.matrix.length];
+        int[][] result = new int[this.matrix.length][secondMatrix.matrix[0].length];
 
         for (int i = 0; i < this.matrix.length; i++) {
-            for (int j = 0; j < this.matrix.length; j++) {
-                for (int k = 0; k < this.matrix.length; k++) {
+            for (int j = 0; j < secondMatrix.matrix[0].length; j++) {
+                for (int k = 0; k < secondMatrix.matrix.length; k++) {
                     result[i][j] += this.matrix[i][k] * secondMatrix.matrix[k][j];
                 }
             }
         }
+
         return new Matrix(result);
     }
 
@@ -52,4 +53,3 @@ class Matrix {
         return this.matrix;
     }
 }
-
