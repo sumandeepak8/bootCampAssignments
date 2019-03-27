@@ -16,34 +16,37 @@ class ParkingLot {
 
     void registerAttendant(Attendant attendant) {
         this.attendant = attendant;
-    }
-
-    Token park(Car car) throws ParkingException {
-        if (this.attendant != null) {
-            if (this.lots.size() + 1 == this.capacity)
-                this.attendant.notification(this.toString() + " is full");
-            if (this.lots.size() == this.capacity)
-                throw new ParkingException("lots is full");
-        }
-        if (!this.lots.containsValue(car)) {
-            Token token = new Token();
-            this.lots.put(token, car);
-            return token;
-        }
-        throw new ParkingException("This is already parked");
+        this.attendant.addParkingLot(this);
     }
 
     int totalCars() {
         return this.lots.size();
     }
 
-    Car unPark(Token token) {
-        if (this.lots.size() == this.capacity) {
-            if (this.attendant != null)
-                this.attendant.notification("Parking lot is available now");
+
+    Token park(Car car) throws ParkingLotFullException, CarAlreadyParkedException  {
+        if (this.lots.size() == this.capacity)
+            throw new ParkingLotFullException();
+        if (!this.lots.containsValue(car)) {
+            Token token = new Token();
+            this.lots.put(token, car);
+            if (this.lots.size() == this.capacity)
+                this.attendant.notifyAttendant(this.toString() + " is full");
+            return token;
         }
-        Car car = this.lots.get(token);
-        this.lots.remove(token);
-        return car;
+        throw new CarAlreadyParkedException();
+    }
+
+
+    Car unPark(Token token) throws InvalidToken {
+        if (this.lots.containsKey(token)) {
+            if (this.lots.size() == this.capacity) {
+                this.attendant.notifyAttendant(this.toString() + " lot is available now");
+            }
+            Car car = this.lots.get(token);
+            this.lots.remove(token);
+            return car;
+        }
+        throw new InvalidToken();
     }
 }

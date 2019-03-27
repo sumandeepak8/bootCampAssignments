@@ -18,10 +18,12 @@ class Matrix {
     }
 
     Matrix multiply(Matrix secondMatrix) {
-        int[][] result = new int[this.matrix.length][secondMatrix.matrix[0].length];
+        int rows = this.matrix.length;
+        int columns = secondMatrix.matrix[0].length;
+        int[][] result = new int[rows][columns];
 
-        for (int i = 0; i < this.matrix.length; i++) {
-            for (int j = 0; j < secondMatrix.matrix[0].length; j++) {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
                 for (int k = 0; k < secondMatrix.matrix.length; k++) {
                     result[i][j] += this.matrix[i][k] * secondMatrix.matrix[k][j];
                 }
