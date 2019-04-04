@@ -1,7 +1,10 @@
 package com.java.bootcamp.logger;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 class LogFileTest {
+    @Test
+    void shouldReturnMessageFromLogFile() {
 
+    }
 }

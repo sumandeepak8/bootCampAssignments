@@ -1,4 +1,9 @@
 package com.java.bootcamp.bagballproblem;
 
-public class Ball {
+class Ball {
+    private String color;
+
+    Ball(String color) {
+        this.color = color;
+    }
 }

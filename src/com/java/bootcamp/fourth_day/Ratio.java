@@ -2,7 +2,7 @@ package com.java.bootcamp.fourth_day;
 
 import java.math.BigDecimal;
 
-class Ratio extends Unit{
+class Ratio extends Unit {
 
     private final BigDecimal RATIO;
     private final Type TYPE;
@@ -21,11 +21,11 @@ class Ratio extends Unit{
     }
 
     boolean isOfSameType(Ratio ratioUnit) {
-        return this.TYPE ==  ratioUnit.TYPE;
+        return this.TYPE == ratioUnit.TYPE;
     }
 
     @Override
     BigDecimal valueInBaseUnit(BigDecimal value) {
-         return this.RATIO.multiply(value);
+        return this.RATIO.multiply(value);
     }
 }

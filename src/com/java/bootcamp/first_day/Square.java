@@ -1,11 +1,9 @@
 package com.java.bootcamp.first_day;
 
-import com.java.bootcamp.first_day.Shape;
-
 public class Square implements Shape {
     private double side;
 
-    public Square(double side) {
+    Square(double side) {
         this.side = side;
     }
 

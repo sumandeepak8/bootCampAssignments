@@ -4,7 +4,7 @@ public class Rectangle implements Shape {
     private final Dimension width;
     private final Dimension length;
 
-    public Rectangle(Dimension width, Dimension length) {
+    Rectangle(Dimension width, Dimension length) {
         this.width = width;
         this.length = length;
     }

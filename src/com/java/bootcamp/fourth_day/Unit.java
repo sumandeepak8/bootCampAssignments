@@ -8,6 +8,5 @@ abstract class Unit {
         LENGTH,
         VOLUME
     }
-
     abstract BigDecimal valueInBaseUnit(BigDecimal value);
 }

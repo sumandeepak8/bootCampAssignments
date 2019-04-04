@@ -9,7 +9,7 @@ class AttendantTest {
     @Test
     void shouldAddParkingLot() {
         ParkingLot parkingLot = new ParkingLot(2);
-        Attendant attendant = new Attendant(parkingLot, new Display());
+        Attendant attendant = new Attendant(parkingLot);
         attendant.addParkingLot(parkingLot);
         assertEquals(2, attendant.totalParkingLots());
 
@@ -18,7 +18,7 @@ class AttendantTest {
     @Test
     void shouldDisplayAllParkingLotDetails() {
         ParkingLot parkingLot = new ParkingLot(4);
-        Attendant attendant = new Attendant(parkingLot, new Display());
+        Attendant attendant = new Attendant(parkingLot);
         attendant.addParkingLot(parkingLot);
     }
 }

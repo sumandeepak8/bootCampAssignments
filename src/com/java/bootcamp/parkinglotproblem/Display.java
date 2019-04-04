@@ -2,18 +2,21 @@ package com.java.bootcamp.parkinglotproblem;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
+import java.util.Map;
 
-public class Display {
+class Display {
     private static Display ourInstance = new Display();
+    Map<String, String> details;
 
-    public static Display getInstance() {
+    static Display getInstance() {
         return ourInstance;
     }
 
-    Map<String, Integer> parkingLotsDetail = new HashMap<>();
+    private Display() {
+        this.details = new HashMap<>();
+    }
 
-    String showDisplay() {
-        return "";
+    void updateDetails(String parkingLot, Integer totalCars) {
+        this.details.put(parkingLot,parkingLot + "   " + totalCars);
     }
 }

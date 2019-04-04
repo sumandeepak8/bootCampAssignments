@@ -8,7 +8,6 @@ class ParkingLot {
     Integer capacity;
     Attendant attendant;
 
-
     ParkingLot(Integer capacity) {
         this.capacity = capacity;
         this.lots = new HashMap<>();
@@ -23,30 +22,30 @@ class ParkingLot {
         return this.lots.size();
     }
 
+    boolean isFull() {
+        return this.lots.size() == this.capacity;
+    }
 
-    Token park(Car car) throws ParkingLotFullException, CarAlreadyParkedException  {
-        if (this.lots.size() == this.capacity)
+    Token park(Car car) throws ParkingLotFullException, CarAlreadyParkedException {
+        if (this.isFull())
             throw new ParkingLotFullException();
         if (!this.lots.containsValue(car)) {
             Token token = new Token();
             this.lots.put(token, car);
-            if (this.lots.size() == this.capacity)
-                this.attendant.notifyAttendant(this.toString() + " is full");
+            this.attendant.notifyAboutParking(this);
             return token;
         }
         throw new CarAlreadyParkedException();
     }
 
-
     Car unPark(Token token) throws InvalidToken {
         if (this.lots.containsKey(token)) {
-            if (this.lots.size() == this.capacity) {
-                this.attendant.notifyAttendant(this.toString() + " lot is available now");
-            }
+            this.attendant.notifyAboutUnParking(this);
             Car car = this.lots.get(token);
             this.lots.remove(token);
             return car;
         }
         throw new InvalidToken();
     }
+
 }

@@ -3,14 +3,15 @@ package com.java.bootcamp.fourth_day;
 import java.math.BigDecimal;
 
 class Quantity {
-//    private final BigDecimal value;
-//    private final Unit unit;
-//
-//    Quantity(BigDecimal value, Unit unit) {
-//        this.value = value;
-//        this.unit = unit;
-//    }
-//
+
+    private final BigDecimal value;
+    private final Unit unit;
+
+    Quantity(BigDecimal value, Unit unit) {
+        this.value = value;
+        this.unit = unit;
+    }
+
 //    @Override
 //    public boolean equals(Object o) {
 //        if (this == o) return true;

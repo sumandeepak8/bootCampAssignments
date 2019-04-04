@@ -1,85 +1,98 @@
 package com.java.bootcamp.parkinglotproblem;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ParkingLotTest {
+    ParkingLot parkingLot;
+    ParkingLot parkingLot1;
+    Attendant attendant;
+    Car swift;
+    Car honda_city;
+
+    @BeforeEach
+    void executeIt() {
+        parkingLot = new ParkingLot(2);
+        parkingLot1 = new ParkingLot(2);
+
+        attendant = new Attendant(parkingLot);
+
+        parkingLot.registerAttendant(attendant);
+        parkingLot1.registerAttendant(attendant);
+
+
+        swift = new Car("swift");
+        honda_city = new Car("honda_city");
+    }
+
 
     @Test
     void shouldParkACarToParkingLot() throws CarAlreadyParkedException, ParkingLotFullException {
-        ParkingLot parkingLot = new ParkingLot(4);
-        Car swift = new Car("swift");
-        Car city = new Car("city");
         parkingLot.park(swift);
-        parkingLot.park(city);
-
+        parkingLot.park(honda_city);
         assertEquals(2, parkingLot.totalCars());
     }
 
     @Test
     void shouldNotParkIfAlreadyInParking() throws CarAlreadyParkedException, ParkingLotFullException {
-        ParkingLot parkingLot = new ParkingLot(2);
-        Car swift = new Car("swift");
         parkingLot.park(swift);
         assertThrows(CarAlreadyParkedException.class, () -> parkingLot.park(swift));
         assertEquals(1, parkingLot.totalCars());
     }
 
-    @Test
-    void shouldNotParkIfParkingLotsAreFull() throws CarAlreadyParkedException, ParkingLotFullException {
-        ParkingLot parkingLot = new ParkingLot(1);
-        Attendant attendant = new Attendant(parkingLot, new Display());
-        parkingLot.registerAttendant(attendant);
-        Car swift = new Car("swift");
-        Car honda_city = new Car("honda_city");
-        parkingLot.park(swift);
-        assertThrows(ParkingLotFullException.class, () -> parkingLot.park(honda_city));
-    }
 
     @Test
     void shouldNotParkIfParkingLotIsFullAndNotifyToAttendant() throws CarAlreadyParkedException, ParkingLotFullException {
-        ParkingLot parkingLot = new ParkingLot(1);
-        Display display = new Display();
-        Attendant attendant = new Attendant(parkingLot, display);
-        attendant.addParkingLot(parkingLot);
-        parkingLot.registerAttendant(attendant);
-
-        Car swift = new Car("swift");
         parkingLot.park(swift);
-
-        assertEquals(1, parkingLot.totalCars());
+        parkingLot.park(honda_city);
         assertThrows(ParkingLotFullException.class, () -> parkingLot.park(swift));
     }
 
     @Test
     void shouldUnParkFromParkingLotAndNotifyAttendant() throws InvalidToken, CarAlreadyParkedException, ParkingLotFullException {
-        ParkingLot parkingLot = new ParkingLot(2);
+
         TestAttendant testAttendant = new TestAttendant();
         testAttendant.addParkingLot(parkingLot);
         parkingLot.registerAttendant(testAttendant);
-        Car swift = new Car("swift");
-        Car city = new Car("city");
         Token token = parkingLot.park(swift);
-        parkingLot.park(city);
+        parkingLot.park(honda_city);
 
-        assertTrue(testAttendant.isCalled);
+        assertTrue(testAttendant.isParked);
         parkingLot.unPark(token);
         assertEquals(1, parkingLot.totalCars());
     }
 
+    @Test
+    void shouldDisplayDetailsOfAllParkingLotsThatAttendantIsTakesCare() throws CarAlreadyParkedException, ParkingLotFullException {
+        parkingLot.park(swift);
+        parkingLot.park(honda_city);
+        parkingLot1.park(swift);
+        parkingLot1.park(honda_city);
+        attendant.displayParkingLotsDetails();
+    }
+
+
 }
 
 class TestAttendant extends Attendant {
-    boolean isCalled = false;
+    boolean isParked = false;
+    boolean isUnParked = false;
 
     TestAttendant() {
-        super(new ParkingLot(2), new Display());
+        super(new ParkingLot(2));
     }
 
     @Override
-    void notifyAttendant(String message) {
-        super.notifyAttendant(message);
-        this.isCalled = true;
+    void notifyAboutParking(ParkingLot parkingLot) {
+        super.notifyAboutParking(parkingLot);
+        this.isParked = true;
+    }
+
+    @Override
+    void notifyAboutUnParking(ParkingLot parkingLot) {
+        super.notifyAboutUnParking(parkingLot);
+        this.isUnParked = true;
     }
 }
